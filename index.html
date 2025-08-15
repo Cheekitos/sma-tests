@@ -524,30 +524,43 @@
 
         const platformDiv = document.createElement('div');
         platformDiv.className = 'text-xs text-white mb-2 flex items-baseline gap-2 platform-block';
+        platformDiv.style.whiteSpace = 'nowrap';
+        platformDiv.style.overflow = 'hidden';
+        platformDiv.style.textOverflow = 'ellipsis';
 
         const labelPlatform = document.createElement('span');
         labelPlatform.textContent = 'Platform:';
-        labelPlatform.className = 'leading-tight flex-shrink-0';
+        labelPlatform.className = 'leading-tight';
         platformDiv.appendChild(labelPlatform);
 
         const platformWrapper = document.createElement('div');
-        platformWrapper.className = 'flex items-center gap-1 flex-wrap';
+        platformWrapper.className = 'flex items-center gap-1';
 
-        ['Shadow of Chernobyl', 'Clear Sky', 'Call of Pripyat'].forEach((plat, idx, arr) => {
+        // For smaller cards (4 per row), only show the selected platform
+        if (cardsPerRow === 4) {
+          const selectedPlatform = mod.platform;
           const span = document.createElement('span');
-          span.textContent = plat;
-          span.className = (mod.platform === plat)
-            ? 'border border-white bg-yellow-400 bg-opacity-50 px-2 py-0.5 rounded-sm text-[10px] text-white leading-tight'
-            : 'text-gray-400 text-[10px] leading-tight';
+          span.textContent = selectedPlatform;
+          span.className = 'border border-white bg-yellow-400 bg-opacity-50 px-2 py-0.5 rounded-sm text-[10px] text-white leading-tight';
           platformWrapper.appendChild(span);
+        } else {
+          // For larger cards, show all three options as before
+          ['Shadow of Chernobyl', 'Clear Sky', 'Call of Pripyat'].forEach((plat, idx, arr) => {
+            const span = document.createElement('span');
+            span.textContent = plat;
+            span.className = (mod.platform === plat)
+              ? 'border border-white bg-yellow-400 bg-opacity-50 px-2 py-0.5 rounded-sm text-[10px] text-white leading-tight'
+              : 'text-gray-400 text-[10px] leading-tight';
+            platformWrapper.appendChild(span);
 
-          if (idx < arr.length - 1) {
-            const sep = document.createElement('span');
-            sep.textContent = '|';
-            sep.className = 'text-gray-400 text-[10px] leading-tight';
-            platformWrapper.appendChild(sep);
-          }
-        });
+            if (idx < arr.length - 1) {
+              const sep = document.createElement('span');
+              sep.textContent = '|';
+              sep.className = 'text-gray-400 text-[10px] leading-tight';
+              platformWrapper.appendChild(sep);
+            }
+          });
+        }
 
         platformDiv.appendChild(platformWrapper);
 
