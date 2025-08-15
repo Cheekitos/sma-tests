@@ -357,6 +357,7 @@
     let sortState = 0;
     let originalMods = [];
     let cardsPerRow = 3; // Default to 3 cards per row
+    let currentDisplayedMods = []; // Track what's currently being displayed
 
     function getYouTubeVideoId(url) {
       const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -422,15 +423,8 @@
     function updateGridLayout() {
       const modList = document.getElementById('mod-list');
       modList.className = `grid gap-4 cards-${cardsPerRow}`;
-      // Re-render the current mods to apply the new layout
-      const currentMods = Array.from(modList.children).length > 0 ? 
-        (document.getElementById('search-input').value ? 
-          mods.filter(mod =>
-            mod.title.toLowerCase().includes(document.getElementById('search-input').value.toLowerCase()) ||
-            mod.description.toLowerCase().includes(document.getElementById('search-input').value.toLowerCase()) ||
-            (mod.platform && mod.platform.toLowerCase().includes(document.getElementById('search-input').value.toLowerCase()))
-          ) : mods) : mods;
-      renderMods(currentMods);
+      // Re-render the currently displayed mods to apply the new layout
+      renderMods(currentDisplayedMods);
     }
 
     async function loadMods() {
@@ -458,6 +452,7 @@
     }
 
     function renderMods(modArray) {
+      currentDisplayedMods = modArray; // Track what we're currently displaying
       const container = document.getElementById('mod-list');
       container.innerHTML = '';
       
