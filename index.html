@@ -153,7 +153,7 @@
     }
 
     .cards-2 {
-      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
     }
     .cards-3 {
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -422,6 +422,15 @@
     function updateGridLayout() {
       const modList = document.getElementById('mod-list');
       modList.className = `grid gap-4 cards-${cardsPerRow}`;
+      // Re-render the current mods to apply the new layout
+      const currentMods = Array.from(modList.children).length > 0 ? 
+        (document.getElementById('search-input').value ? 
+          mods.filter(mod =>
+            mod.title.toLowerCase().includes(document.getElementById('search-input').value.toLowerCase()) ||
+            mod.description.toLowerCase().includes(document.getElementById('search-input').value.toLowerCase()) ||
+            (mod.platform && mod.platform.toLowerCase().includes(document.getElementById('search-input').value.toLowerCase()))
+          ) : mods) : mods;
+      renderMods(currentMods);
     }
 
     async function loadMods() {
