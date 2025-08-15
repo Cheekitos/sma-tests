@@ -524,17 +524,14 @@
 
         const platformDiv = document.createElement('div');
         platformDiv.className = 'text-xs text-white mb-2 flex items-baseline gap-2 platform-block';
-        platformDiv.style.whiteSpace = 'nowrap';
-        platformDiv.style.overflow = 'hidden';
-        platformDiv.style.textOverflow = 'ellipsis';
 
         const labelPlatform = document.createElement('span');
         labelPlatform.textContent = 'Platform:';
-        labelPlatform.className = 'leading-tight';
+        labelPlatform.className = 'leading-tight flex-shrink-0';
         platformDiv.appendChild(labelPlatform);
 
         const platformWrapper = document.createElement('div');
-        platformWrapper.className = 'flex items-center gap-1';
+        platformWrapper.className = 'flex items-center gap-1 flex-wrap';
 
         ['Shadow of Chernobyl', 'Clear Sky', 'Call of Pripyat'].forEach((plat, idx, arr) => {
           const span = document.createElement('span');
